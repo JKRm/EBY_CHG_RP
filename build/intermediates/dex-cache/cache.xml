@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Rimon_Kou\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="D:\fidouafclient\app\build\intermediates\pre-dexed\debug\gson-2.3.1-9ab63b5017cf8d01890bee6dbe25fd18864b8fc2.jar" />
+    </item>
+    <item
+        jar="D:\fidouafclient\app\libs\scprov-jdk15on-1.47.0.3.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a1ff8a74a7013c4ada7e4d20d335b302d147ddd1">
+        <dex dex="D:\fidouafclient\app\build\intermediates\pre-dexed\debug\scprov-jdk15on-1.47.0.3-2c328316db483fe055e7af906d4b90da7ee82be4.jar" />
+    </item>
+    <item
+        jar="D:\fidouafclient\app\libs\commons-codec-1.10.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4b95f4897fa13f2cd904aee711aeafc0c5295cd8">
+        <dex dex="D:\fidouafclient\app\build\intermediates\pre-dexed\debug\commons-codec-1.10-d58245f01e4a6bd42e919961bbabeffc352cf907.jar" />
+    </item>
+    <item
+        jar="D:\android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="D:\fidouafclient\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-ccf1976f2ed10671c81cbe19f136351b0d5865ab.jar" />
+    </item>
+    <item
+        jar="D:\fidouafclient\app\libs\sc-light-jdk15on-1.47.0.2.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d5c98671cc97fa0d928be1c7eb5edd3fb95d3234">
+        <dex dex="D:\fidouafclient\app\build\intermediates\pre-dexed\debug\sc-light-jdk15on-1.47.0.2-aed2986629b50dc538a8bd0430e11858e198b4e5.jar" />
+    </item>
+
+</items>
