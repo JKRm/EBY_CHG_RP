@@ -3,10 +3,14 @@ package cn.ac.iie.RPMod.fidouafclient.curl;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 
 import org.apache.http.Header;
+import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -20,8 +24,48 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
+import android.util.Log;
 
 public class Curl {
+
+	private static String cookies;
+	private static HashMap<String,String>  CookieContiner=new HashMap<String,String>() ;
+
+	public static void SaveCookies(HttpResponse httpResponse) {
+		Header[] headers = httpResponse.getHeaders("Set-Cookie");
+		String headerstr=headers.toString();
+		if (headers == null)
+			return;
+
+		for(int i=0;i<headers.length;i++)
+		{
+			String cookie=headers[i].getValue();
+			String[]cookievalues=cookie.split(";");
+			for(int j=0;j<cookievalues.length;j++)
+			{
+				String[] keyPair=cookievalues[j].split("=");
+				String key=keyPair[0].trim();
+				String value=keyPair.length>1?keyPair[1].trim():"";
+				CookieContiner.put(key, value);
+			}
+		}
+	}
+
+	public static void AddCookies(HttpPost request) {
+		StringBuilder sb = new StringBuilder();
+		Iterator iter = CookieContiner.entrySet().iterator();
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry) iter.next();
+			String key = entry.getKey().toString();
+			String val = entry.getValue().toString();
+			sb.append(key);
+			sb.append("=");
+			sb.append(val);
+			sb.append(";");
+		}
+		request.addHeader("cookie", sb.toString());
+	}
 
 	public static String toStr(HttpResponse response) {
 		String result = "";
@@ -107,7 +151,8 @@ public class Curl {
 	public static String post(String url, String header, String data) {
 		return post (url, header.split(" "), data);
 	}
-	
+
+
 	public static String post(String url, String[] header, String data) {
 		String ret = "";
 		try {
@@ -115,18 +160,26 @@ public class Curl {
 			HttpClient httpClient = getClient(url);
 
 			HttpPost request = new HttpPost(url);
+			AddCookies(request);
 			if (header != null){
 				for (String h : header){
 					String[] split = h.split(":");
 					request.addHeader(split[0], split[1]);
 				}
 			}
+//			if(!TextUtils.isEmpty(cookies)){
+//				request.addHeader("Cookie", cookies);
+//			}
+
 			request.setEntity(new StringEntity(data));
 			try {
 				HttpResponse response = httpClient.execute(request);
 				ret = Curl.toStr(response);
+				SaveCookies(response);
 				Header[] headers = response.getAllHeaders();
-
+				for(int i=0; i<headers.length; i++){
+					Log.e("HEADER", headers[i].getName() + " " + headers[i].getValue());
+				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				ret = "{'error_code':'connect_fail','url':'" + url + "'}";

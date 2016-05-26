@@ -1,5 +1,7 @@
 package cn.ac.iie.RPMod.fidouafclient.op;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -10,7 +12,10 @@ import org.json.JSONObject;
 import cn.ac.iie.RPMod.fidouafclient.curl.Curl;
 import cn.ac.iie.RPMod.fidouafclient.msg.Context;
 import cn.ac.iie.RPMod.fidouafclient.msg.RequestInitializer;
+import cn.ac.iie.RPMod.fidouafclient.msg.StandardRequest;
+import cn.ac.iie.RPMod.fidouafclient.msg.StandardResponse;
 import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
+import cn.ac.iie.RPMod.fidouafclient.util.NewEndpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
 
 public class ModReg {
@@ -21,7 +26,9 @@ public class ModReg {
 		String msg = "{\"uafProtocolMessage\":\"";
 		try {
 			String serverResponse = getRegRequest(username);
-			JSONArray reg = new JSONArray(serverResponse);
+			Log.e("MODREG_", serverResponse);
+			StandardRequest standardRequest = gson.fromJson(serverResponse, StandardRequest.class);
+			JSONArray reg = new JSONArray(standardRequest.getUafRequest());
 			((JSONObject)reg.get(0)).getJSONObject("header").put("appID", appId);
 			JSONObject uafMsg = new JSONObject();
 			uafMsg.put("uafProtocolMessage", reg.toString());
@@ -47,12 +54,13 @@ public class ModReg {
 		context.setUserName(username);
 		context.setPolicyName("default");
 		requestInitializer.setContext(context);
-		String headerStr = "Content-Type: application/fido+uaf; charset=UTF-8";
-		return Curl.postInSeparateThread(Endpoints.getRegRequestEndpoint(), headerStr, gson.toJson(requestInitializer));
+		String headerStr = "Content-Type:application/fido+uaf Accept:Application/fido+uaf";
+		String url = NewEndpoints.getRegRequestEndpoint();
+		return Curl.postInSeparateThread(url, headerStr, gson.toJson(requestInitializer));
 	}
 
 	
-	public String clientSendRegResponse (String uafMessage){
+	public String clientSendRegResponse (String uafMessage, String username){
 		StringBuffer res = new StringBuffer();
 		String decoded = null;
 		try {
@@ -61,11 +69,17 @@ public class ModReg {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+
+        StandardResponse standardResponse = new StandardResponse();
+        Context context = new Context();
+        context.setAppID("sampleapp");
+        standardResponse.setContext(context);
+        standardResponse.setUafResponse(decoded);
 		
 		res.append("#uafMessageegOut\n"+decoded);
-		String headerStr = "Content-Type:Application/json Accept:Application/json";
+		String headerStr = "Content-Type:Application/json Accept:Application/json Cookie:userID=" + username;
 		res.append("\n\n#ServerResponse\n");
-		String serverResponse = Curl.postInSeparateThread(Endpoints.getRegResponseEndpoint(), headerStr , decoded);
+        String serverResponse = Curl.postInSeparateThread(NewEndpoints.getRegResponseEndpoint(), headerStr, gson.toJson(standardResponse));
 		res.append(serverResponse);
 		saveAAIDandKeyID(serverResponse);
 		return res.toString();

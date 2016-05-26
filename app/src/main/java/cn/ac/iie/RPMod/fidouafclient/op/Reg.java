@@ -1,5 +1,7 @@
 package cn.ac.iie.RPMod.fidouafclient.op;
 
+import android.util.Log;
+
 import cn.ac.iie.RPMod.fidouafclient.curl.Curl;
 import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
@@ -18,6 +20,7 @@ public class Reg {
 		String msg = "{\"uafProtocolMessage\":\"";
 		try {
 			String serverResponse = getRegRequest(username);
+			Log.e("REG", serverResponse);
 			JSONArray reg = new JSONArray(serverResponse);
 			((JSONObject)reg.get(0)).getJSONObject("header").put("appID", appId);
 			JSONObject uafMsg = new JSONObject();
@@ -52,7 +55,7 @@ public class Reg {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 		res.append("#uafMessageegOut\n"+decoded);
 		String headerStr = "Content-Type:Application/json Accept:Application/json";
 		res.append("\n\n#ServerResponse\n");

@@ -6,6 +6,9 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.List;
 
+import cn.ac.iie.RPMod.fidouafclient.msg.Context;
+import cn.ac.iie.RPMod.fidouafclient.msg.OriginResponse;
+import cn.ac.iie.RPMod.fidouafclient.msg.StandardResponse;
 import cn.ac.iie.RPMod.fidouafclient.msg.UAFIntentType;
 import cn.ac.iie.RPMod.fidouafclient.op.Auth;
 import cn.ac.iie.RPMod.fidouafclient.op.Dereg;
@@ -27,6 +30,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class MainActivity extends Activity {
 
     private static final int REG_ACTIVITY_RES_3 = 3;
@@ -40,6 +46,7 @@ public class MainActivity extends Activity {
     private Dereg dereg = new Dereg();
     private Auth auth = new Auth();
     private String facetID = "";
+    private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +104,7 @@ public class MainActivity extends Activity {
         List<ResolveInfo> queryIntentActivities = this.getPackageManager().queryIntentActivities(i, PackageManager.MATCH_DEFAULT_ONLY);
         title.setText("facetID=" + facetID);
         String appid = "https://test.noknoklabs.cn:8443/UAFSampleProxy/uaf/facets.uaf";
-        String regRequest = reg.getUafMsgRegRequest(username, facetID);
+        String regRequest = modReg.getUafMsgRegRequest(username, facetID);
         title.setText("{regRequest}" + regRequest);
 
         Bundle data = new Bundle();
@@ -218,7 +225,7 @@ public class MainActivity extends Activity {
                     msg.setText(uafMessage);
                     //Prepare ReqResponse
                     //post to server
-                    String res = reg.clientSendRegResponse(uafMessage);
+                    String res = modReg.clientSendRegResponse(uafMessage, Preferences.getSettingsParam("username"));
                     setContentView(R.layout.activity_registered);
                     findFields();
                     title.setText("extras=" + extras.toString());
