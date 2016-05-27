@@ -4,17 +4,24 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.ac.iie.RPMod.fidouafclient.curl.Curl;
 import cn.ac.iie.RPMod.fidouafclient.msg.Context;
 import cn.ac.iie.RPMod.fidouafclient.msg.RequestInitializer;
 import cn.ac.iie.RPMod.fidouafclient.msg.StandardRequest;
 import cn.ac.iie.RPMod.fidouafclient.msg.StandardResponse;
-import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
+import cn.ac.iie.RPMod.fidouafclient.msg.StandardTransaction;
+import cn.ac.iie.RPMod.fidouafclient.msg.StandardUAFRequest;
 import cn.ac.iie.RPMod.fidouafclient.util.NewEndpoints;
 
 public class ModAuth {
@@ -30,7 +37,16 @@ public class ModAuth {
             JSONArray authReq = new JSONArray(standardRequest.getUafRequest());
             ((JSONObject)authReq.get(0)).getJSONObject("header").put("appID", appId);
             if (isTrx) {
-                ((JSONObject) authReq.get(0)).put("transaction", getTransaction());
+                String uafRequestArray = standardRequest.getUafRequest();
+                JsonArray uafRequestJsonArray = (JsonArray) new JsonParser().parse(uafRequestArray);
+                List<StandardUAFRequest> standardUAFRequestList = new ArrayList<StandardUAFRequest>();
+                for(int i=0; i<uafRequestJsonArray.size(); i++){
+                    JsonObject uafRequestJson = uafRequestJsonArray.get(i).getAsJsonObject();
+                    StandardUAFRequest standardUAFRequest = gson.fromJson(uafRequestJson, StandardUAFRequest.class);
+                    standardUAFRequestList.add(standardUAFRequest);
+                }
+                StandardTransaction standardTransaction = standardUAFRequestList.get(0).getTransaction()[0];
+                ((JSONObject) authReq.get(0)).put("transaction", getTransaction(standardTransaction.getContentType(), standardTransaction.getContent()));
             }
             JSONObject uafMsg = new JSONObject();
             uafMsg.put("uafProtocolMessage", authReq.toString());
@@ -42,13 +58,13 @@ public class ModAuth {
         return msg;
     }
 
-    private JSONArray getTransaction (){
+    private JSONArray getTransaction (String type, String data){
         JSONArray ret = new JSONArray();
         JSONObject trx = new JSONObject();
 
         try {
-            trx.put("contentType", "image/png");
-            trx.put("content", "aGVsbG8gd29ybGQh".trim());
+            trx.put("contentType", type);
+            trx.put("content", data.trim());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -7,12 +7,9 @@ import java.security.cert.CertificateFactory;
 import java.util.List;
 
 import cn.ac.iie.RPMod.fidouafclient.msg.UAFIntentType;
-import cn.ac.iie.RPMod.fidouafclient.op.Auth;
-import cn.ac.iie.RPMod.fidouafclient.op.Dereg;
 import cn.ac.iie.RPMod.fidouafclient.op.ModAuth;
 import cn.ac.iie.RPMod.fidouafclient.op.ModDereg;
 import cn.ac.iie.RPMod.fidouafclient.op.ModReg;
-import cn.ac.iie.RPMod.fidouafclient.op.Reg;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
 import android.os.Bundle;
 import android.app.Activity;
@@ -40,11 +37,8 @@ public class MainActivity extends Activity {
     private TextView msg;
     private TextView title;
     private TextView username;
-    private Reg reg = new Reg();
     private ModReg modReg = new ModReg();
-    private Dereg dereg = new Dereg();
     private ModDereg modDereg = new ModDereg();
-    private Auth auth = new Auth();
     private ModAuth  modAuth = new ModAuth();
     private String facetID = "";
     private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
@@ -82,7 +76,7 @@ public class MainActivity extends Activity {
         i.setType("application/fido.uaf_client+json");
         List<ResolveInfo> queryIntentActivities = this.getPackageManager().queryIntentActivities(i, PackageManager.GET_META_DATA);
         Bundle data = new Bundle();
-        data.putString("message", reg.getEmptyUafMsgRegRequest());
+        data.putString("message", modReg.getEmptyUafMsgRegRequest());
         data.putString("UAFIntentType", UAFIntentType.DISCOVER.name());
         i.putExtras(data);
         startActivityForResult(i, 1);
@@ -211,7 +205,7 @@ public class MainActivity extends Activity {
             if (resultCode == RESULT_OK) {
                 String asmResponse = data.getStringExtra("message");
                 msg.setText(asmResponse);
-                dereg.recordKeyId(asmResponse);
+                modDereg.recordKeyId(asmResponse);
                 //Prepare ReqResponse
                 //post to server
             }

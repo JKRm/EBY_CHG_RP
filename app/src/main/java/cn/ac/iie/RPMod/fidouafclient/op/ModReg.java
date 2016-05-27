@@ -23,7 +23,6 @@ import cn.ac.iie.RPMod.fidouafclient.msg.RequestInitializer;
 import cn.ac.iie.RPMod.fidouafclient.msg.StandardRequest;
 import cn.ac.iie.RPMod.fidouafclient.msg.StandardResponse;
 import cn.ac.iie.RPMod.fidouafclient.msg.StandardUAFRequest;
-import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.NewEndpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
 

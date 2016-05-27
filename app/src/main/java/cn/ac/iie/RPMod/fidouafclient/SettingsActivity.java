@@ -3,7 +3,6 @@ package cn.ac.iie.RPMod.fidouafclient;
 
 import java.util.logging.Logger;
 
-import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.NewEndpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
 
@@ -58,7 +57,7 @@ public class SettingsActivity extends Activity {
 	}
 	
 	public void reset(View view) {
-		Endpoints.setDefaults();
+		NewEndpoints.setDefaults();
 		populate();
 	}
 

@@ -17,7 +17,6 @@ import cn.ac.iie.RPMod.fidouafclient.msg.Operation;
 import cn.ac.iie.RPMod.fidouafclient.msg.OperationHeader;
 import cn.ac.iie.RPMod.fidouafclient.msg.StandardResponse;
 import cn.ac.iie.RPMod.fidouafclient.msg.Version;
-import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.NewEndpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
 
@@ -92,7 +91,7 @@ public class ModDereg {
 	
 	public String post(String json) {
 		String header = "Content-Type:Application/json Accept:Application/json";
-		return Curl.postInSeparateThread(Endpoints.getDeregEndpoint(), header , json);
+		return Curl.postInSeparateThread(NewEndpoints.getDeregEndpoint(), header , json);
 	}
 
 	public String newPost(String aaid, String KeyID, String username){
