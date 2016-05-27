@@ -24,7 +24,7 @@ public class ModAuth {
     public String getUafMsgRequest (boolean isTrx, String appId){
         String msg = "{\"uafProtocolMessage\":\"";
         try {
-            String serverResponse = getAuthRequest();
+            String serverResponse = getAuthRequest(isTrx);
             Log.e("MODAUTH", serverResponse);
             StandardRequest standardRequest = gson.fromJson(serverResponse, StandardRequest.class);
             JSONArray authReq = new JSONArray(standardRequest.getUafRequest());
@@ -84,11 +84,16 @@ public class ModAuth {
         return res.toString();
     }
 
-    private String getAuthRequest() {
+    private String getAuthRequest(boolean transaction) {
         RequestInitializer requestInitializer = new RequestInitializer();
         Context context = new Context();
         context.setAppID("sampleapp");
         context.setPolicyName("default");
+        if(transaction){
+            context.setTransaction(true);
+            context.setQty("1");
+            context.setPrice("100.0");
+        }
         requestInitializer.setContext(context);
         String headStr = "Content-Type:application/fido+uaf Accept:Application/fido+uaf";
         String url = NewEndpoints.getAuthRequestEndpoint();

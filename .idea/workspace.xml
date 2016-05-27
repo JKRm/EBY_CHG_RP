@@ -30,11 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7748691">
-              <caret line="269" column="62" selection-start-line="269" selection-start-column="62" selection-end-line="269" selection-end-column="62" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="170" column="46" selection-start-line="170" selection-start-column="46" selection-end-line="170" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,11 +94,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ModAuth.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ModAuth.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/op/ModAuth.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="81" column="80" selection-start-line="81" selection-start-column="80" selection-end-line="81" selection-end-column="80" />
+            <state vertical-scroll-proportion="0.478185">
+              <caret line="92" column="41" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -1498,9 +1498,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/op/Reg.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/op/ModReg.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/curl/Curl.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/op/ModAuth.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/util/NewEndpoints.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/op/ModAuth.java" />
       </list>
     </option>
   </component>
@@ -2381,14 +2381,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/op/ModReg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="72" column="25" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/util/NewEndpoints.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.035714">
@@ -2397,21 +2389,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/op/ModAuth.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/op/ModReg.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="81" column="80" selection-start-line="81" selection-start-column="80" selection-end-line="81" selection-end-column="80" />
+          <caret line="72" column="25" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7748691">
-          <caret line="269" column="62" selection-start-line="269" selection-start-column="62" selection-end-line="269" selection-end-column="62" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="170" column="46" selection-start-line="170" selection-start-column="46" selection-end-line="170" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/cn/ac/iie/RPMod/fidouafclient/op/ModAuth.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.478185">
+          <caret line="92" column="41" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -168,7 +168,7 @@ public class MainActivity extends Activity {
     public void trxRequest(View view) {
         title.setText("facetID=" + facetID);
         title.setText("Authentication operation executed");
-        String authRequest = auth.getUafMsgRequest(true, facetID);
+        String authRequest = modAuth.getUafMsgRequest(true, facetID);
         Intent i = new Intent("org.fidoalliance.intent.FIDO_OPERATION");
         i.addCategory("android.intent.category.DEFAULT");
         i.setType("application/fido.uaf_client+json");
