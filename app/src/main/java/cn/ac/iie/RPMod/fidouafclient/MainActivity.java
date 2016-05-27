@@ -12,6 +12,7 @@ import cn.ac.iie.RPMod.fidouafclient.msg.StandardResponse;
 import cn.ac.iie.RPMod.fidouafclient.msg.UAFIntentType;
 import cn.ac.iie.RPMod.fidouafclient.op.Auth;
 import cn.ac.iie.RPMod.fidouafclient.op.Dereg;
+import cn.ac.iie.RPMod.fidouafclient.op.ModAuth;
 import cn.ac.iie.RPMod.fidouafclient.op.ModReg;
 import cn.ac.iie.RPMod.fidouafclient.op.Reg;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
@@ -45,6 +46,7 @@ public class MainActivity extends Activity {
     private ModReg modReg = new ModReg();
     private Dereg dereg = new Dereg();
     private Auth auth = new Auth();
+    private ModAuth  modAuth = new ModAuth();
     private String facetID = "";
     private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
@@ -150,7 +152,7 @@ public class MainActivity extends Activity {
     public void authRequest(View view) {
         title.setText("facetID=" + facetID);
         title.setText("Authentication operation executed");
-        String authRequest = auth.getUafMsgRequest(false, facetID);
+        String authRequest = modAuth.getUafMsgRequest(false, facetID);
         Intent i = new Intent("org.fidoalliance.intent.FIDO_OPERATION");
         i.addCategory("android.intent.category.DEFAULT");
         i.setType("application/fido.uaf_client+json");
@@ -271,7 +273,7 @@ public class MainActivity extends Activity {
                     Log.e("Auth message response", uafMessage);
                     //Prepare ReqResponse
                     //post to server
-                    String res = auth.clientSendResponse(uafMessage);
+                    String res = modAuth.clientSendResponse(uafMessage);
                     msg.setText("\n" + res);
                 }
             }

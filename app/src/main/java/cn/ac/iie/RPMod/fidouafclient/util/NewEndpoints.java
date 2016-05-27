@@ -6,8 +6,10 @@ public class NewEndpoints {
 	//"http://openidconnect.ebay.com";
 //	"http://www.head2toes.org";
 "https://10.10.4.60:8443";
-	public static final String GET_AUTH_REQUEST = "/fidouaf/v1/public/authRequest";
-	public static final String POST_AUTH_RESPONSE = "/fidouaf/v1/public/authResponse";
+//	public static final String GET_AUTH_REQUEST = "/fidouaf/v1/public/authRequest";
+	public static final String GET_AUTH_REQUEST = "/HttpsMod/auth/receive";
+//	public static final String POST_AUTH_RESPONSE = "/fidouaf/v1/public/authResponse";
+	public static final String POST_AUTH_RESPONSE = "/HttpsMod/auth/send";
 	public static final String POST_DEREG_RESPONSE = "/fidouaf/v1/public/deregRequest";
 //	public static final String GET_REG_REQUEST = "/fidouaf/v1/public/regRequest/";
 	public static final String GET_REG_REQUEST = "/HttpsMod/reg/receive";
