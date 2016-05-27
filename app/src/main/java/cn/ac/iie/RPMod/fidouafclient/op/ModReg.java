@@ -4,10 +4,16 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.ac.iie.RPMod.fidouafclient.curl.Curl;
 import cn.ac.iie.RPMod.fidouafclient.msg.AuthenticatorMessageResponse;
@@ -16,6 +22,7 @@ import cn.ac.iie.RPMod.fidouafclient.msg.RegistrationResultResponse;
 import cn.ac.iie.RPMod.fidouafclient.msg.RequestInitializer;
 import cn.ac.iie.RPMod.fidouafclient.msg.StandardRequest;
 import cn.ac.iie.RPMod.fidouafclient.msg.StandardResponse;
+import cn.ac.iie.RPMod.fidouafclient.msg.StandardUAFRequest;
 import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.NewEndpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
@@ -30,6 +37,15 @@ public class ModReg {
 			String serverResponse = getRegRequest(username);
 			Log.e("MODREG_", serverResponse);
 			StandardRequest standardRequest = gson.fromJson(serverResponse, StandardRequest.class);
+            String uafRequestArray = standardRequest.getUafRequest();
+            JsonArray uafRequestJsonArray = (JsonArray) new JsonParser().parse(uafRequestArray);
+            List<StandardUAFRequest> standardUAFRequestList = new ArrayList<StandardUAFRequest>();
+            for(int i=0; i<uafRequestJsonArray.size(); i++){
+                JsonObject uafRequestJson = uafRequestJsonArray.get(i).getAsJsonObject();
+                StandardUAFRequest standardUAFRequest = gson.fromJson(uafRequestJson, StandardUAFRequest.class);
+                standardUAFRequestList.add(standardUAFRequest);
+            }
+            Preferences.setSettingsParam("appID", standardUAFRequestList.get(0).getHeader().getAppID());
 			JSONArray reg = new JSONArray(standardRequest.getUafRequest());
 			((JSONObject)reg.get(0)).getJSONObject("header").put("appID", appId);
 			JSONObject uafMsg = new JSONObject();

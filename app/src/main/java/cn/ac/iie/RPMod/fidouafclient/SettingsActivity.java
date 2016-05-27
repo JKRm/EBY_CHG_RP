@@ -4,6 +4,7 @@ package cn.ac.iie.RPMod.fidouafclient;
 import java.util.logging.Logger;
 
 import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
+import cn.ac.iie.RPMod.fidouafclient.util.NewEndpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
 
 import android.app.Activity;
@@ -44,12 +45,12 @@ public class SettingsActivity extends Activity {
     
 	private void populate() {
 		this.username.setText(Preferences.getSettingsParam("username"));
-		this.serverEndpoint.setText(Endpoints.getServer());
-		this.authReqEndpoint.setText(Endpoints.getAuthRequestPath());
-		this.authResEndpoint.setText(Endpoints.getAuthResponsePath());
-		this.regReqEndpoint.setText(Endpoints.getRegRequestPath());
-		this.regResEndpoint.setText(Endpoints.getRegResponsePath());
-		this.dereqEndpoint.setText(Endpoints.getDeregPath());
+		this.serverEndpoint.setText(NewEndpoints.getServer());
+		this.authReqEndpoint.setText(NewEndpoints.getAuthRequestPath());
+		this.authResEndpoint.setText(NewEndpoints.getAuthResponsePath());
+		this.regReqEndpoint.setText(NewEndpoints.getRegRequestPath());
+		this.regResEndpoint.setText(NewEndpoints.getRegResponsePath());
+		this.dereqEndpoint.setText(NewEndpoints.getDeregPath());
 	}
 
 	public void back(View view) {
@@ -63,7 +64,7 @@ public class SettingsActivity extends Activity {
 
 	public void save(View view) {
 		Preferences.setSettingsParam("username", this.username.getText().toString());
-		Endpoints.save(
+		NewEndpoints.save(
 				this.serverEndpoint.getText().toString(),
 				this.authReqEndpoint.getText().toString(),
 				this.authResEndpoint.getText().toString(),

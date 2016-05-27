@@ -10,14 +10,18 @@ public class NewEndpoints {
 	public static final String GET_AUTH_REQUEST = "/HttpsMod/auth/receive";
 //	public static final String POST_AUTH_RESPONSE = "/fidouaf/v1/public/authResponse";
 	public static final String POST_AUTH_RESPONSE = "/HttpsMod/auth/send";
-	public static final String POST_DEREG_RESPONSE = "/fidouaf/v1/public/deregRequest";
+//	public static final String POST_DEREG_RESPONSE = "/fidouaf/v1/public/deregRequest";
+	public static final String POST_DEREG_RESPONSE = "/HttpsMod/reg/delete";
 //	public static final String GET_REG_REQUEST = "/fidouaf/v1/public/regRequest/";
 	public static final String GET_REG_REQUEST = "/HttpsMod/reg/receive";
 //	public static final String POST_REG_RESPONSE = "/fidouaf/v1/public/regResponse";
 	public static final String POST_REG_RESPONSE = "/HttpsMod/reg/send";
 
 	private static void check() {
-		setDefaults();
+		String serverEndpoint = Preferences.getSettingsParam("serverEndpoint");
+		if(serverEndpoint!=null && serverEndpoint.length()==0){
+			setDefaults();
+		}
 	}
 
 	public static String getServer() {

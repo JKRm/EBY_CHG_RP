@@ -6,13 +6,11 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.List;
 
-import cn.ac.iie.RPMod.fidouafclient.msg.Context;
-import cn.ac.iie.RPMod.fidouafclient.msg.OriginResponse;
-import cn.ac.iie.RPMod.fidouafclient.msg.StandardResponse;
 import cn.ac.iie.RPMod.fidouafclient.msg.UAFIntentType;
 import cn.ac.iie.RPMod.fidouafclient.op.Auth;
 import cn.ac.iie.RPMod.fidouafclient.op.Dereg;
 import cn.ac.iie.RPMod.fidouafclient.op.ModAuth;
+import cn.ac.iie.RPMod.fidouafclient.op.ModDereg;
 import cn.ac.iie.RPMod.fidouafclient.op.ModReg;
 import cn.ac.iie.RPMod.fidouafclient.op.Reg;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
@@ -45,6 +43,7 @@ public class MainActivity extends Activity {
     private Reg reg = new Reg();
     private ModReg modReg = new ModReg();
     private Dereg dereg = new Dereg();
+    private ModDereg modDereg = new ModDereg();
     private Auth auth = new Auth();
     private ModAuth  modAuth = new ModAuth();
     private String facetID = "";
@@ -134,7 +133,7 @@ public class MainActivity extends Activity {
     public void dereg(View view) {
 
         title.setText("Deregistration operation executed");
-        String uafMessage = dereg.getUafMsgRequest();
+        String uafMessage = modDereg.getUafMsgRequest();
         Intent i = new Intent("org.fidoalliance.intent.FIDO_OPERATION");
         i.addCategory("android.intent.category.DEFAULT");
         i.setType("application/fido.uaf_client+json");
@@ -242,23 +241,24 @@ public class MainActivity extends Activity {
             }
         } else if (requestCode == DEREG_ACTIVITY_RES_4) {
             if (resultCode == RESULT_OK) {
-                Preferences.setSettingsParam("keyID", "");
-                Preferences.setSettingsParam("username", "");
                 setContentView(R.layout.activity_main);
                 findFields();
                 title.setText("extras=" + extras.toString());
                 String message = data.getStringExtra("message");
                 if (message != null) {
                     String out = "Dereg done. Client msg=" + message;
-                    out = out + ". Sent=" + dereg.clientSendDeregResponse(message);
+                    out = out + ". Sent=" + modDereg.clientSendDeregResponse(message);
                     msg.setText(out);
                 } else {
                     String deregMsg = Preferences.getSettingsParam("deregMsg");
                     String out = "Dereg done. Client msg was empty. Dereg msg = " + deregMsg;
-                    out = out + ". Response=" + dereg.post(deregMsg);
+                    Log.e("DEREGAAID", Preferences.getSettingsParam("AAID"));
+                    out = out + ". Response=" + modDereg.newPost(Preferences.getSettingsParam("AAID"), Preferences.getSettingsParam("keyID"), Preferences.getSettingsParam("username"));
                     msg.setText(out);
 
                 }
+                Preferences.setSettingsParam("keyID", "");
+                Preferences.setSettingsParam("username", "");
 
             }
             if (resultCode == RESULT_CANCELED) {

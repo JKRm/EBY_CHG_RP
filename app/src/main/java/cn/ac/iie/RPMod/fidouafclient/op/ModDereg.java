@@ -1,6 +1,8 @@
 package cn.ac.iie.RPMod.fidouafclient.op;
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -8,12 +10,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.ac.iie.RPMod.fidouafclient.curl.Curl;
+import cn.ac.iie.RPMod.fidouafclient.msg.Context;
 import cn.ac.iie.RPMod.fidouafclient.msg.DeregisterAuthenticator;
 import cn.ac.iie.RPMod.fidouafclient.msg.DeregistrationRequest;
 import cn.ac.iie.RPMod.fidouafclient.msg.Operation;
 import cn.ac.iie.RPMod.fidouafclient.msg.OperationHeader;
+import cn.ac.iie.RPMod.fidouafclient.msg.StandardResponse;
 import cn.ac.iie.RPMod.fidouafclient.msg.Version;
 import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
+import cn.ac.iie.RPMod.fidouafclient.util.NewEndpoints;
 import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
 
 public class ModDereg {
@@ -28,7 +33,7 @@ public class ModDereg {
 			Preferences.setSettingsParam("deregMsg", forSending);
 //			post(forSending);
 			JSONArray deregReq = new JSONArray(forSending);
-			((JSONObject)deregReq.get(0)).getJSONObject("header").put("appID", "android:apk-key-hash:bE0f1WtRJrZv/C0y9CM73bAUqiI");
+			((JSONObject)deregReq.get(0)).getJSONObject("header").put("appID", Preferences.getSettingsParam("appID"));
 			((JSONObject)deregReq.get(0)).getJSONObject("header").remove("serverData");
 			JSONObject uafMsg = new JSONObject();
 			uafMsg.put("uafProtocolMessage", deregReq.toString());
@@ -90,6 +95,19 @@ public class ModDereg {
 		return Curl.postInSeparateThread(Endpoints.getDeregEndpoint(), header , json);
 	}
 
+	public String newPost(String aaid, String KeyID, String username){
+		String header = "Content-Type:Application/json Accept:Application/json";
+		StandardResponse standardResponse = new StandardResponse();
+		Context context = new Context();
+		context.setAppID("sampleapp");
+		context.setAaid(aaid);
+		context.setKeyID(KeyID);
+		context.setUserName(username);
+		standardResponse.setContext(context);
+		String data = gson.toJson(standardResponse);
+		return Curl.postInSeparateThread(NewEndpoints.getDeregEndpoint(), header, data);
+	}
+
 	public String getDeregUafMessage(DeregistrationRequest regResponse) {
 		DeregistrationRequest[] forSending = new DeregistrationRequest[1];
 		forSending[0] = regResponse;
@@ -102,6 +120,7 @@ public class ModDereg {
 		String decoded = null;
 		try {
 			JSONObject json = new JSONObject(uafMessage);
+			Log.e("MODDEREG", uafMessage);
 			decoded = json.getString("uafProtocolMessage").replace("\\", "");
 			post(decoded);
 			return decoded;
