@@ -1,23 +1,22 @@
 package cn.ac.iie.RPMod.fidouafclient.op;
 
 
-import android.util.Log;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import cn.ac.iie.RPMod.fidouafclient.curl.Curl;
-import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
-import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
 import cn.ac.iie.RPMod.fidouafclient.msg.DeregisterAuthenticator;
 import cn.ac.iie.RPMod.fidouafclient.msg.DeregistrationRequest;
 import cn.ac.iie.RPMod.fidouafclient.msg.Operation;
 import cn.ac.iie.RPMod.fidouafclient.msg.OperationHeader;
 import cn.ac.iie.RPMod.fidouafclient.msg.Version;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import cn.ac.iie.RPMod.fidouafclient.util.Endpoints;
+import cn.ac.iie.RPMod.fidouafclient.util.Preferences;
 
-import com.google.gson.Gson;
-
-public class Dereg {
+public class ModDereg {
 
 	private Gson gson = new Gson();
 	
@@ -29,7 +28,7 @@ public class Dereg {
 			Preferences.setSettingsParam("deregMsg", forSending);
 //			post(forSending);
 			JSONArray deregReq = new JSONArray(forSending);
-			((JSONObject)deregReq.get(0)).getJSONObject("header").put("appID", Preferences.getSettingsParam("appID"));
+			((JSONObject)deregReq.get(0)).getJSONObject("header").put("appID", "android:apk-key-hash:bE0f1WtRJrZv/C0y9CM73bAUqiI");
 			((JSONObject)deregReq.get(0)).getJSONObject("header").remove("serverData");
 			JSONObject uafMsg = new JSONObject();
 			uafMsg.put("uafProtocolMessage", deregReq.toString());
@@ -101,7 +100,6 @@ public class Dereg {
 	public String clientSendDeregResponse (String uafMessage) {
 		StringBuffer res = new StringBuffer();
 		String decoded = null;
-		Log.e("DEREG", uafMessage);
 		try {
 			JSONObject json = new JSONObject(uafMessage);
 			decoded = json.getString("uafProtocolMessage").replace("\\", "");

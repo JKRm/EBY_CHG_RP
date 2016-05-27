@@ -10,7 +10,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.ac.iie.RPMod.fidouafclient.curl.Curl;
+import cn.ac.iie.RPMod.fidouafclient.msg.AuthenticatorMessageResponse;
 import cn.ac.iie.RPMod.fidouafclient.msg.Context;
+import cn.ac.iie.RPMod.fidouafclient.msg.RegistrationResultResponse;
 import cn.ac.iie.RPMod.fidouafclient.msg.RequestInitializer;
 import cn.ac.iie.RPMod.fidouafclient.msg.StandardRequest;
 import cn.ac.iie.RPMod.fidouafclient.msg.StandardResponse;
@@ -87,13 +89,9 @@ public class ModReg {
 
 	
 	private void saveAAIDandKeyID(String res) {
-		try{
-			JSONArray regRecord = new JSONArray(res);
-			JSONObject authenticator = regRecord.getJSONObject(0).getJSONObject("authenticator");
-			Preferences.setSettingsParam("AAID", authenticator.getString("AAID"));
-			Preferences.setSettingsParam("keyID", authenticator.getString("KeyID"));
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		RegistrationResultResponse registrationResultResponse = gson.fromJson(res, RegistrationResultResponse.class);
+		AuthenticatorMessageResponse authenticatorMessageResponse = registrationResultResponse.getDescription().getAuthenticatorsSucceeded()[0];
+		Preferences.setSettingsParam("AAID", authenticatorMessageResponse.getAaid());
+		Preferences.setSettingsParam("keyID", authenticatorMessageResponse.getKeyID());
 	}
 }
