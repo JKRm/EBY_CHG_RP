@@ -85,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="dereg"
+            android:text="解绑"
             android:id="@+id/textDeregLabel"
             />
     </LinearLayout>
@@ -113,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="authenticate"
+            android:text="认证"
             android:id="@+id/textAuthenticateLable"
              />
     </LinearLayout>
@@ -141,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="transaction"
+            android:text="事务"
             android:id="@+id/textTrxLabel"
             />
     </LinearLayout>

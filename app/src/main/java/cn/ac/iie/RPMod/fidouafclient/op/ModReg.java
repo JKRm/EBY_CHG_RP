@@ -96,6 +96,7 @@ public class ModReg {
 		res.append("#uafMessageegOut\n"+decoded);
 		String headerStr = "Content-Type:Application/json Accept:Application/json Cookie:userID=" + username;
 		res.append("\n\n#ServerResponse\n");
+		Log.e("standard Response", gson.toJson(standardResponse));
         String serverResponse = Curl.postInSeparateThread(NewEndpoints.getRegResponseEndpoint(), headerStr, gson.toJson(standardResponse));
 		res.append(serverResponse);
 		saveAAIDandKeyID(serverResponse);

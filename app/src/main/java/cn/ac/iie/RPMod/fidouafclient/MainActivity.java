@@ -6,6 +6,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.List;
 
+import cn.ac.iie.RPMod.fidouafclient.msg.DeregistrationRequest;
 import cn.ac.iie.RPMod.fidouafclient.msg.UAFIntentType;
 import cn.ac.iie.RPMod.fidouafclient.op.ModAuth;
 import cn.ac.iie.RPMod.fidouafclient.op.ModDereg;
@@ -240,13 +241,16 @@ public class MainActivity extends Activity {
                 title.setText("extras=" + extras.toString());
                 String message = data.getStringExtra("message");
                 if (message != null) {
+                    Log.e("dereg message", message);
                     String out = "Dereg done. Client msg=" + message;
-                    out = out + ". Sent=" + modDereg.clientSendDeregResponse(message);
+                    DeregistrationRequest deregistrationRequest = gson.fromJson(message, DeregistrationRequest.class);
+                    out = out + ". Sent=" + modDereg.newPost(deregistrationRequest.header.appID, deregistrationRequest.authenticators[0].keyID, Preferences.getSettingsParam("username"));
                     msg.setText(out);
                 } else {
                     String deregMsg = Preferences.getSettingsParam("deregMsg");
                     String out = "Dereg done. Client msg was empty. Dereg msg = " + deregMsg;
                     Log.e("DEREGAAID", Preferences.getSettingsParam("AAID"));
+                    Log.e("DEREG_MESSAGE", deregMsg);
                     out = out + ". Response=" + modDereg.newPost(Preferences.getSettingsParam("AAID"), Preferences.getSettingsParam("keyID"), Preferences.getSettingsParam("username"));
                     msg.setText(out);
 
